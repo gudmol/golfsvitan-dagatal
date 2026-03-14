@@ -1,0 +1,13 @@
+{
+  "name": "golfsvitan-dagatal",
+  "version": "1.0.0",
+  "description": "Dagatalssýning fyrir golfherma Golfsvítunnar",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "node-ical": "^0.18.0"
+  }
+}

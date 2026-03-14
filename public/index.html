@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golfsvítan - Dagatal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Location selector (shown when no ?location= parameter) -->
+  <div id="location-selector" class="hidden">
+    <h1>Golfsvítan</h1>
+    <p>Veldu staðsetningu</p>
+    <div class="location-buttons">
+      <a href="?location=kopavogur" class="location-btn">Kópavogur - Ögurhvarf</a>
+      <a href="?location=hafnarfjordur" class="location-btn">Hafnarfjörður</a>
+      <a href="?location=egilsholl" class="location-btn">Egilshöll</a>
+    </div>
+  </div>
+
+  <!-- Main display -->
+  <div id="display" class="hidden">
+    <header>
+      <div class="header-left">
+        <img src="logo.svg" alt="Golfsvítan" id="logo">
+        <div class="header-text">
+          <h1 id="location-name"></h1>
+          <span id="date-display"></span>
+        </div>
+      </div>
+      <div id="clock"></div>
+    </header>
+    <div id="simulators"></div>
+  </div>
+
+  <!-- Error display -->
+  <div id="error-banner" class="hidden">
+    <span>Tenging rofin — reyni aftur...</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
