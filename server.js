@@ -16,6 +16,12 @@ function formatTime(date) {
   return date.toISOString().slice(11, 16);
 }
 
+// Convert "HH:MM" to minutes since midnight
+function timeToMin(t) {
+  const [h, m] = t.split(':').map(Number);
+  return h * 60 + m;
+}
+
 // Check if a date is today (UTC)
 function isToday(date) {
   const now = new Date();
@@ -82,17 +88,46 @@ async function fetchSimulatorBookings(simulator) {
       });
     }
 
-    // Deduplicate overlapping bookings on the same time slot.
-    // Bookly keeps cancelled bookings in the iCal feed without STATUS:CANCELLED.
-    // Since a simulator can only have one active booking per time slot,
-    // if two bookings share the exact same start+end, keep only the last one
-    // (the newer replacement booking).
-    const slotMap = new Map();
-    for (const booking of bookings) {
-      const slotKey = booking.start + '-' + booking.end;
-      slotMap.set(slotKey, booking); // later entry overwrites earlier (cancelled) one
+    // Remove cancelled bookings from Bookly iCal feed.
+    // Bookly keeps cancelled bookings without STATUS:CANCELLED.
+    // A simulator can only have ONE booking at any given moment, so any
+    // overlap means one booking is cancelled.
+    //
+    // Strategy: later entries in the iCal feed are newer (active) bookings.
+    // Process bookings from LAST to FIRST. Build a minute-by-minute timeline.
+    // If a booking overlaps with already-claimed time, it's the old cancelled
+    // booking and should be removed.
+    const timeline = new Set(); // minutes already claimed by active bookings
+    const kept = [];
+
+    // Process in reverse order (newest/last in feed first)
+    for (let i = bookings.length - 1; i >= 0; i--) {
+      const b = bookings[i];
+      const bStart = timeToMin(b.start);
+      const bEnd = timeToMin(b.end);
+
+      // Check if ANY minute of this booking is already claimed
+      let hasConflict = false;
+      for (let m = bStart; m < bEnd; m++) {
+        if (timeline.has(m)) {
+          hasConflict = true;
+          break;
+        }
+      }
+
+      if (hasConflict) {
+        // This booking overlaps with a newer one — it's cancelled, skip it
+        continue;
+      }
+
+      // Claim all minutes for this booking
+      for (let m = bStart; m < bEnd; m++) {
+        timeline.add(m);
+      }
+      kept.push(b);
     }
-    const dedupedBookings = Array.from(slotMap.values());
+
+    const dedupedBookings = kept.reverse(); // restore chronological order
 
     // Sort by start time
     dedupedBookings.sort((a, b) => a.start.localeCompare(b.start));
