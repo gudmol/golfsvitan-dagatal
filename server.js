@@ -82,13 +82,25 @@ async function fetchSimulatorBookings(simulator) {
       });
     }
 
+    // Deduplicate overlapping bookings on the same time slot.
+    // Bookly keeps cancelled bookings in the iCal feed without STATUS:CANCELLED.
+    // Since a simulator can only have one active booking per time slot,
+    // if two bookings share the exact same start+end, keep only the last one
+    // (the newer replacement booking).
+    const slotMap = new Map();
+    for (const booking of bookings) {
+      const slotKey = booking.start + '-' + booking.end;
+      slotMap.set(slotKey, booking); // later entry overwrites earlier (cancelled) one
+    }
+    const dedupedBookings = Array.from(slotMap.values());
+
     // Sort by start time
-    bookings.sort((a, b) => a.start.localeCompare(b.start));
+    dedupedBookings.sort((a, b) => a.start.localeCompare(b.start));
 
     const result = {
       id: simulator.id,
       label: simulator.label,
-      bookings
+      bookings: dedupedBookings
     };
 
     cache.set(cacheKey, { data: result, timestamp: Date.now() });
