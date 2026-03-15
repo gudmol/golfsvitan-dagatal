@@ -68,6 +68,7 @@ async function fetchSimulatorBookings(simulator) {
 
     for (const [, event] of Object.entries(events)) {
       if (event.type !== 'VEVENT') continue;
+      if (event.status === 'CANCELLED') continue;
 
       const start = new Date(event.start);
       if (!isToday(start)) continue;
