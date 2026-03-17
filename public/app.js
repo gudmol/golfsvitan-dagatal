@@ -157,10 +157,10 @@
 
   function refitAllNames() {
     var isLarge = window.innerWidth >= 1200;
-    var nowMax = isLarge ? 48 : 32;
-    var nowMin = isLarge ? 20 : 14;
-    var nextMax = isLarge ? 28 : 21;
-    var nextMin = isLarge ? 16 : 12;
+    var nowMax = isLarge ? 60 : 32;
+    var nowMin = isLarge ? 24 : 14;
+    var nextMax = isLarge ? 36 : 21;
+    var nextMin = isLarge ? 18 : 12;
 
     document.querySelectorAll('.now-name').forEach(function (el) {
       if (el.textContent !== 'Laus') {
@@ -489,10 +489,10 @@
     // Fit names after DOM is updated
     requestAnimationFrame(function () {
       var isLarge = window.innerWidth >= 1200;
-      var nowMax = isLarge ? 48 : 32;
-      var nowMin = isLarge ? 20 : 16;
-      var nextMax = isLarge ? 28 : 21;
-      var nextMin = isLarge ? 16 : 14;
+      var nowMax = isLarge ? 60 : 32;
+      var nowMin = isLarge ? 24 : 16;
+      var nextMax = isLarge ? 36 : 21;
+      var nextMin = isLarge ? 18 : 14;
 
       document.querySelectorAll('.now-name').forEach(function (el) {
         if (el.textContent !== 'Laus') fitText(el, nowMax, nowMin);
