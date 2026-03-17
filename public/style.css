@@ -360,6 +360,51 @@ header h1 {
   font-style: italic;
 }
 
+/* ===== QR Code sections ===== */
+.qr-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #ddd;
+}
+
+.qr-section.qr-small {
+  margin-top: 6px;
+  padding-top: 6px;
+}
+
+.qr-code {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.qr-small .qr-code {
+  width: 44px;
+  height: 44px;
+}
+
+.qr-text {
+  font-size: 0.7rem;
+  color: #6aaa6a;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.qr-small .qr-text {
+  font-size: 0.6rem;
+}
+
+/* Inline QR in schedule list */
+.qr-code-inline {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 /* ===== Error Banner ===== */
 #error-banner {
   position: fixed;
@@ -478,6 +523,29 @@ header h1 {
 
   .schedule-item-name {
     font-size: 0.95rem;
+  }
+
+  .qr-code {
+    width: 80px;
+    height: 80px;
+  }
+
+  .qr-small .qr-code {
+    width: 56px;
+    height: 56px;
+  }
+
+  .qr-text {
+    font-size: 0.85rem;
+  }
+
+  .qr-small .qr-text {
+    font-size: 0.75rem;
+  }
+
+  .qr-code-inline {
+    width: 26px;
+    height: 26px;
   }
 }
 
@@ -621,6 +689,10 @@ header h1 {
   .upcoming-list,
   .schedule-list,
   .free-slot {
+    display: none;
+  }
+
+  .qr-section {
     display: none;
   }
 }

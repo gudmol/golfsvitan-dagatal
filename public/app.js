@@ -292,6 +292,7 @@
         nowSection.appendChild(nowName);
         nowSection.appendChild(nowTime);
       } else {
+        nowSection.classList.add('free-now');
         nowName.textContent = 'Laus';
         nowSection.appendChild(nowLabel);
         nowSection.appendChild(nowName);
@@ -309,6 +310,20 @@
           freeRest.textContent = 'Laust restina af deginum';
           nowSection.appendChild(freeRest);
         }
+
+        // QR code for booking
+        var qrWrap = document.createElement('div');
+        qrWrap.className = 'qr-section';
+        var qrImg = document.createElement('img');
+        qrImg.src = 'qr-code.png';
+        qrImg.alt = 'Bókaðu tíma';
+        qrImg.className = 'qr-code';
+        var qrText = document.createElement('div');
+        qrText.className = 'qr-text';
+        qrText.textContent = 'Bókaðu auka tíma hér';
+        qrWrap.appendChild(qrImg);
+        qrWrap.appendChild(qrText);
+        nowSection.appendChild(qrWrap);
       }
 
       body.appendChild(nowSection);
@@ -336,6 +351,21 @@
           freeSlot.appendChild(freeLabel);
           freeSlot.appendChild(freeText);
           freeSlot.appendChild(freeTime);
+
+          // QR code for free gap
+          var gapQr = document.createElement('div');
+          gapQr.className = 'qr-section qr-small';
+          var gapQrImg = document.createElement('img');
+          gapQrImg.src = 'qr-code.png';
+          gapQrImg.alt = 'Bókaðu tíma';
+          gapQrImg.className = 'qr-code';
+          var gapQrText = document.createElement('div');
+          gapQrText.className = 'qr-text';
+          gapQrText.textContent = 'Bókaðu auka tíma hér';
+          gapQr.appendChild(gapQrImg);
+          gapQr.appendChild(gapQrText);
+          freeSlot.appendChild(gapQr);
+
           body.appendChild(freeSlot);
         }
       }
@@ -360,6 +390,21 @@
         afterSection.appendChild(afterLabel);
         afterSection.appendChild(afterText);
         afterSection.appendChild(afterTime);
+
+        // QR code for after section
+        var afterQr = document.createElement('div');
+        afterQr.className = 'qr-section qr-small';
+        var afterQrImg = document.createElement('img');
+        afterQrImg.src = 'qr-code.png';
+        afterQrImg.alt = 'Bókaðu tíma';
+        afterQrImg.className = 'qr-code';
+        var afterQrText = document.createElement('div');
+        afterQrText.className = 'qr-text';
+        afterQrText.textContent = 'Bókaðu auka tíma hér';
+        afterQr.appendChild(afterQrImg);
+        afterQr.appendChild(afterQrText);
+        afterSection.appendChild(afterQr);
+
         body.appendChild(afterSection);
       }
 
@@ -421,6 +466,16 @@
 
           item.appendChild(itemTime);
           item.appendChild(itemName);
+
+          // Small QR icon for free schedule slots
+          if (slot.type === 'free') {
+            var schedQr = document.createElement('img');
+            schedQr.src = 'qr-code.png';
+            schedQr.alt = 'Bóka';
+            schedQr.className = 'qr-code-inline';
+            item.appendChild(schedQr);
+          }
+
           schedList.appendChild(item);
         });
 
